@@ -5,7 +5,7 @@ function Header (){
     return (
         <div id = "headWrapper">
             <div id = "header">
-                <h3 id = "title">DewAI</h3>
+                <h3 id = "title">Google Books Search</h3>
             </div>
             <div>
 

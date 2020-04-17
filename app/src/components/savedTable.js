@@ -6,32 +6,23 @@ import "./styles.css"
 class Table extends React.Component{
     constructor(props){
         super(props);
-        this.state = {bookData: this.props.data, searchVal: null}
+        this.state = {bookData: this.props.data}
         }
 
-        search(searchVal){
-            
-        }
-
-        createTableRows(book){
+        createTableRows(books){
             let data = this.state.bookData;
             //console.log(data)
-            if (bookdata.length > 0){
-                return data.map((book) => {
-                    const {title, author, description, image, link} = book
-                    const key = book.title
+            if (books.length > 0){
+                return data.map((books) => {
+                    const {id, title, author, description, image, link} = books
+                    const key = book.id
                     return (
                 <div class = "book-card" id = {key}>
                     <h3 class = "title">{title}</h3>
                     <h3 class = "card-author">{author}</h3>
                     <p class = "card-description">{description}</p>
                     <img class = "card-image" href= {image} alt = "book cover"/>
-                    <button class = "savebutton" onClick = {fetch(`./api/books/`, {type:"POST", data:{
-                        title: title,
-                        author: author,
-                        description: description,
-                        image: image
-                    }})}></button>
+                    <button class = "savebutton" id = {id} onClick = {fetch(`./api/books/` + id, {type:"DELETE"})}>Delete Book From Saved</button>
                     <a href = {link}></a>
                 </div>
                     )
