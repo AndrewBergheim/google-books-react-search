@@ -6,16 +6,21 @@ import "./styles.css"
 class Table extends React.Component{
     constructor(props){
         super(props);
-        this.state = {bookData: this.props.data}
+        this.state = ({bookData: []})
         }
 
-        createTableRows(books){
+
+        componentDidMount(){
+            fetch("./api/books").then((dat) => {this.setState({bookData: dat})})
+        }
+
+        createTableRows(){
             let data = this.state.bookData;
             //console.log(data)
-            if (books.length > 0){
+            if (data.length > 0){
                 return data.map((books) => {
                     const {id, title, author, description, image, link} = books
-                    const key = book.id
+                    const key = id
                     return (
                 <div class = "book-card" id = {key}>
                     <h3 class = "title">{title}</h3>
@@ -23,30 +28,25 @@ class Table extends React.Component{
                     <p class = "card-description">{description}</p>
                     <img class = "card-image" href= {image} alt = "book cover"/>
                     <button class = "savebutton" id = {id} onClick = {fetch(`./api/books/` + id, {type:"DELETE"})}>Delete Book From Saved</button>
-                    <a href = {link}></a>
+                    <a href = {link}>{image}</a>
                 </div>
                     )
                 })
             }
-            else{return}
+            else{return (
+                <h6>Saved Loading or Empty</h6>
+            )}
         }
 
 
     render() {
     return (  <div id = "tableWrapper">
-            <div id = "search">
-                <input id = "searchbar" type = "text" onKeyUp= {(event) => {this.setState({searchVal: document.getElementById("searchbar").value})}}></input>
-                <div className = "buttonsDiv">              
-                    <button onClick = {}></button>                
-                </div>
-            </div>
             <div id = "books-div">
                 
             </div>
-            <div>
-
+                {this.createTableRows()}
             </div>
-        </div>)
+        )
     }
 }
 

@@ -6,17 +6,17 @@ import "./styles.css"
 class Table extends React.Component{
     constructor(props){
         super(props);
-        this.state = {bookData: this.props.data, searchVal: null}
+        this.state = {searchVal: null, results: []}
         }
 
         search(searchVal){
             
         }
 
-        createTableRows(book){
-            let data = this.state.bookData;
+        createTableRows(){
+            let data = this.state.results;
             //console.log(data)
-            if (bookdata.length > 0){
+            if (data.length > 0){
                 return data.map((book) => {
                     const {title, author, description, image, link} = book
                     const key = book.title
@@ -32,12 +32,16 @@ class Table extends React.Component{
                         description: description,
                         image: image
                     }})}></button>
-                    <a href = {link}></a>
+                    <a href = {link}>Go to book</a>
                 </div>
                     )
                 })
             }
-            else{return}
+            else{return(
+                <div class = "errordiv">
+                    Awaiting Search
+                </div>
+            )}
         }
 
 
@@ -46,11 +50,11 @@ class Table extends React.Component{
             <div id = "search">
                 <input id = "searchbar" type = "text" onKeyUp= {(event) => {this.setState({searchVal: document.getElementById("searchbar").value})}}></input>
                 <div className = "buttonsDiv">              
-                    <button onClick = {}></button>                
+                    <button onClick = {this.search(this.state.searchVal)}>Search</button>                
                 </div>
             </div>
             <div id = "books-div">
-                
+                {this.createTableRows()}
             </div>
             <div>
 
