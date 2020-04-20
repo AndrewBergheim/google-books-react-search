@@ -1,5 +1,7 @@
-const mongoose = require("mongoose")
+let db = require("../db");
+const mongoose = require("mongoose");
 let bookSchema = new mongoose.Schema({
+    id: String,
     title: String,
     author: String,
     description: String,
@@ -7,7 +9,7 @@ let bookSchema = new mongoose.Schema({
     link: String,
 })
 
-let Book = new mongoose.model("Book", bookSchema)
+let Book = db.model("Book", bookSchema)
 
 
 module.exports = Book

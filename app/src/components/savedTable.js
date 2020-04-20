@@ -3,38 +3,42 @@ import React from 'react';
 import "./styles.css"
 //import employees from "./employees" 
 
-class Table extends React.Component{
+class SavedTable extends React.Component{
     constructor(props){
         super(props);
         this.state = ({bookData: []})
         }
 
 
-        componentDidMount(){
-            fetch("./api/books").then((dat) => {this.setState({bookData: dat})})
-        }
+        async componentDidMount(){
+            console.log("begun")
+            let data = await fetch("/api/books", {type: "GET"});
+            let parsed = await data.json()
+            console.log(parsed)
+            this.setState({bookData: parsed});
+            }
+    
 
         createTableRows(){
             let data = this.state.bookData;
             //console.log(data)
             if (data.length > 0){
                 return data.map((books) => {
-                    const {id, title, author, description, image, link} = books
-                    const key = id
+                    const {_id, title, author, description, image, link} = books
                     return (
-                <div class = "book-card" id = {key}>
-                    <h3 class = "title">{title}</h3>
-                    <h3 class = "card-author">{author}</h3>
-                    <p class = "card-description">{description}</p>
-                    <img class = "card-image" href= {image} alt = "book cover"/>
-                    <button class = "savebutton" id = {id} onClick = {fetch(`./api/books/` + id, {type:"DELETE"})}>Delete Book From Saved</button>
+                <div className = "book-card" key = {_id}>
+                    <h3 className = "title">{title}</h3>
+                    <h3 className = "card-author">{author}</h3>
+                    <p className = "card-description">{description}</p>
+                    <img className = "card-image" src= {image} alt = "book cover"/>
+                    <button className = "savebutton" id = {_id} onClick = {() => fetch(`/api/books/` + _id, {method:"DELETE"})}>Delete Book From Saved</button>
                     <a href = {link}>{image}</a>
                 </div>
                     )
                 })
             }
             else{return (
-                <h6>Saved Loading or Empty</h6>
+                <h6>Saved Books are Loading or Empty</h6>
             )}
         }
 
@@ -42,9 +46,8 @@ class Table extends React.Component{
     render() {
     return (  <div id = "tableWrapper">
             <div id = "books-div">
-                
-            </div>
                 {this.createTableRows()}
+                </div>
             </div>
         )
     }
@@ -53,4 +56,4 @@ class Table extends React.Component{
 
 
 
-export default Table
+export default SavedTable

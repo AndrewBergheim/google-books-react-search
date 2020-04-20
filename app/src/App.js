@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 import Header from './components/Header';
 import Table from './components/Table';
-import savedTable from "./components/savedTable";
+import SavedTable from "./components/SavedTable";
 
 function App() {
   return (
@@ -15,7 +15,7 @@ function App() {
       <Header />
       <Switch>
           <Route path = "/saved">
-            <savedTable/>
+            <SavedTable/>
           </Route>
           <Route path = "/">
             <Table/>

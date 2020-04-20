@@ -1,3 +1,3 @@
 const mongoose = require("mongoose")
-const db = mongoose.connect('mongodb://localhost/google-books-react-search', {useNewUrlParser: true});
+const db = mongoose.createConnection('mongodb://localhost/google-books-react-search');
 module.exports = db
